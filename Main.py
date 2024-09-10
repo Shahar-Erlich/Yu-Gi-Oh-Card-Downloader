@@ -6,14 +6,17 @@ import asyncio
 
 def get_card_info():
     # Open and read the JSON file
-    with open('.venv/Lib/card_info.json', 'r', encoding="utf-8") as file:
-        data = json.load(file)
-        data = data["data"]
-        save_path = "C:\\YGOImages"
-        os.chdir("C:\\")
-        if not os.path.exists(save_path):
-            os.makedirs(save_path)
-        return data, save_path
+    # with open('.venv/Lib/card_info.json', 'r', encoding="utf-8") as file:
+    #     data = json.load(file)
+    #     data = data["data"]
+    save_path = "C:\\YGOImages"
+    os.chdir("C:\\")
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+    try:
+        response = requests.get("https://db.ygoprodeck.com/api/v7/cardinfo.php")
+        return response.json()['data'],save_path
+    except: pass
 
 async def download_image(url, save_in_path):
     try:
@@ -21,7 +24,7 @@ async def download_image(url, save_in_path):
         response.raise_for_status()  # Raises an error on a bad status
         with open(save_in_path, 'wb') as file:
             file.write(response.content)
-        print(f"Image saved to {save_path}")
+        print(f"Image saved to {save_in_path}")
     except requests.RequestException as e:
         print(f"Failed to download {url}: {e}")
 
