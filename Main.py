@@ -5,10 +5,6 @@ import asyncio
 
 
 def get_card_info():
-    # Open and read the JSON file
-    # with open('.venv/Lib/card_info.json', 'r', encoding="utf-8") as file:
-    #     data = json.load(file)
-    #     data = data["data"]
     save_path = "C:\\YGOImages"
     os.chdir("C:\\")
     if not os.path.exists(save_path):
